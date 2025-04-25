@@ -11,7 +11,7 @@ import java.util.Properties;
  **/
 public class ConfigManager {
     private static final Properties properties = new Properties();
-    // The environment is determined by a system property, defaulting to "dev" if not specified.
+    // The environment is determined by a system property, defaulting to "qa" if not specified.
     private static final String ENV = System.getProperty("env", "qa");
 
     static {

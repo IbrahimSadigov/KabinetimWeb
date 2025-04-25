@@ -1,6 +1,8 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 
 /**
  * @author : Ibrahim Sadigov
@@ -11,26 +13,27 @@ public class LoginPage {
     private final Page page;
     private final String baseUrl;
 
+    // Navigate to the login page
     // Define selectors as constants
-    private static final String USERNAME_INPUT = "#username";
-    private static final String PASSWORD_INPUT = "#password";
-    private static final String LOGIN_BUTTON = "#loginButton";
+    private final Locator MSISDN;
+    private final Locator LOGIN_BUTTON;
 
     public LoginPage(Page page, String baseUrl) {
         this.page = page;
         this.baseUrl = baseUrl;
+        MSISDN = page.getByPlaceholder("Telefon nömrəsi");
+        LOGIN_BUTTON = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                .setName("Davam et"));
     }
 
-    // Navigate to the login page
     public void navigate() {
         page.navigate(baseUrl + "/login");
     }
 
     // Fill in credentials and submit the form
-    public void login(String username, String password) {
-        page.fill(USERNAME_INPUT, username);
-        page.fill(PASSWORD_INPUT, password);
-        page.click(LOGIN_BUTTON);
+    public void login(String msisdn) {
+        MSISDN.fill(msisdn);
+        LOGIN_BUTTON.click();
         // Wait for navigation; adjust as needed based on your application’s behavior
         //page.waitForNavigation();
     }
