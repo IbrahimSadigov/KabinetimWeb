@@ -26,9 +26,7 @@ public class LoginTest extends BaseTest {
     public void loginTest() {
         LoginPage loginPage = new LoginPage(page, baseUrl);
         loginPage.navigate();
-        loginPage.login("102210092");
-
-        // Validate that after login the URL contains '/home'
+        loginPage.login("503210035", "Test123!");
         String currentUrl = page.url();
         assertTrue(currentUrl.contains("/home"), "User should be redirected to home page after login");
     }
