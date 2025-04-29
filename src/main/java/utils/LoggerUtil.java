@@ -1,7 +1,7 @@
 package utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author : Ibrahim Sadigov
@@ -9,13 +9,12 @@ import org.apache.logging.log4j.Logger;
  * @created : 11 April, 2025
  **/
 public class LoggerUtil {
-    private static final Logger logger = LogManager.getLogger(LoggerUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
 
-    public static void info(String message) {
-        logger.info(message);
+    public static void info(String msg) {
+        logger.info(msg);
     }
-
-    public static void error(String message, Throwable throwable) {
-        logger.error(message, throwable);
+    public static void error(String msg, Throwable t) {
+        logger.error(msg, t);
     }
 }

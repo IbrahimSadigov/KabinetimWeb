@@ -1,12 +1,8 @@
 package tests;
 
 import base.BaseTest;
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import config.ConfigManager;
-import factory.BrowserFactory;
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.*;
 import pages.LoginPage;
 
@@ -21,13 +17,29 @@ public class LoginTest extends BaseTest {
 
     // Read the base URL from configuration
     private static final String baseUrl = ConfigManager.getProperty("baseUrl");
+    private static final String msisdn = ConfigManager.getProperty("msisdn");
+    private static final String password = ConfigManager.getProperty("password");
 
     @Test
+    @DisplayName("Login Test Case")
     public void loginTest() {
-        LoginPage loginPage = new LoginPage(page, baseUrl);
-        loginPage.navigate();
-        loginPage.login("503210035", "Test123!");
-        String currentUrl = page.url();
-        assertTrue(currentUrl.contains("/home"), "User should be redirected to home page after login");
+        Allure.step("1. Navigate to the login page", () -> {
+            new LoginPage(page, baseUrl).navigate();
+        });
+
+        Allure.step("2. Perform login with MSISDN and password (and OTP/policy if needed)", () -> {
+            new LoginPage(page, baseUrl).login(msisdn, password);
+        });
+
+        Allure.step("3. Verify that the URL contains '/home'", () -> {
+            String currentUrl = page.url();
+            assertTrue(currentUrl.contains("/home"),
+                    "Expected to be on home, but was: " + currentUrl);
+        });
+//        LoginPage loginPage = new LoginPage(page, baseUrl);
+//        loginPage.navigate();
+//        loginPage.login(msisdn, password);
+//        String currentUrl = page.url();
+//        assertTrue(currentUrl.contains("/home"), "User should be redirected to home page after login");
     }
 }
